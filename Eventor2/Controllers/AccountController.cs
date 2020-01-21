@@ -15,6 +15,8 @@ namespace Eventor2.Controllers
     [Authorize]
     public class AccountController : Controller
     {
+
+        
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
@@ -151,7 +153,8 @@ namespace Eventor2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+               
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Test = model.Test};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
