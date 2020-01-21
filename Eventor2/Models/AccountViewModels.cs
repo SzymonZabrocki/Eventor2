@@ -79,6 +79,8 @@ namespace Eventor2.Models
         [Display(Name = "Potwierdź hasło")]
         [Compare("Password", ErrorMessage = "Hasło i jego potwierdzenie są niezgodne.")]
         public string ConfirmPassword { get; set; }
+
+        public string Test { get; set; }
     }
 
     public class ResetPasswordViewModel

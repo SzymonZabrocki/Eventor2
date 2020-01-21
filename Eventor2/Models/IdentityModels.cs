@@ -16,6 +16,9 @@ namespace Eventor2.Models
             // Dodaj tutaj niestandardowe oświadczenia użytkownika
             return userIdentity;
         }
+
+
+        public string Test { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
