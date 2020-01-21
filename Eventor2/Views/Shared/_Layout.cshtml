@@ -8,7 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>One Page Wonder - Start Bootstrap Template</title>
+    <title>@ViewBag.Title — made events simpler</title>
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
 
     <!-- Bootstrap core CSS -->
     <link href="~/Content/bootstrap.min.css" rel="stylesheet">
@@ -43,7 +45,11 @@
             </div>
         </div>
     </nav>
-        @RenderBody()
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
 
     <!-- Footer -->
     <footer class="py-5 bg-black">
