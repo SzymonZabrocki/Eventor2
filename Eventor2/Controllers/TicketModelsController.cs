@@ -7,6 +7,9 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Eventor2.Models;
+using Microsoft.AspNet.Identity;
+
+
 
 namespace Eventor2.Controllers
 {
@@ -14,6 +17,14 @@ namespace Eventor2.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         
+        
+        private string GetLoggedUserMail()
+        {
+            string userId = User.Identity.GetUserId();
+            var userEmail = db.Users.First(x => x.Id == userId).Email;
+            return userEmail;
+        }
+
         // GET: TicketModels
         public ActionResult Index()
         {
@@ -50,7 +61,15 @@ namespace Eventor2.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.TicketModels.Add(ticketModels);
+                var ticket = new TicketModels()
+                {
+                    TicketID = ticketModels.TicketID,
+                    Type = ticketModels.Type,
+                    Price = ticketModels.Price,
+                    UserEmail = GetLoggedUserMail()
+                    
+                };
+                db.TicketModels.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
