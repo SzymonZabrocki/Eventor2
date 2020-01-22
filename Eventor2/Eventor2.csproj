@@ -189,6 +189,10 @@
     <Compile Include="Migrations\202001222011468_ticket.designer.cs">
       <DependentUpon>202001222011468_ticket.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202001222038209_usremail.cs" />
+    <Compile Include="Migrations\202001222038209_usremail.designer.cs">
+      <DependentUpon>202001222038209_usremail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
@@ -326,6 +330,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202001222011468_ticket.resx">
       <DependentUpon>202001222011468_ticket.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202001222038209_usremail.resx">
+      <DependentUpon>202001222038209_usremail.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

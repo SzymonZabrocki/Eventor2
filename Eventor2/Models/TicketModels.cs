@@ -13,5 +13,7 @@ namespace Eventor2.Models
         public string Type {get;set;}
         public int Price { get; set; }
 
+        [MaxLength(256)]
+        public string UserEmail { get; set; }
     }
 }
