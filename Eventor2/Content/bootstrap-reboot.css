@@ -233,7 +233,9 @@ select {
 button,
 [type="button"],
 [type="reset"],
-[type="submit"] {
+[type="
+
+"] {
   -webkit-appearance: button;
 }
 
