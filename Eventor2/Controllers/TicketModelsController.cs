@@ -13,7 +13,7 @@ namespace Eventor2.Controllers
     public class TicketModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-
+        
         // GET: TicketModels
         public ActionResult Index()
         {

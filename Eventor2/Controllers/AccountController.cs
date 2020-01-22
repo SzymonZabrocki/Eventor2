@@ -20,10 +20,12 @@ namespace Eventor2.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        public AccountController(ApplicationDbContext context)
+        public AccountController()
         {
-            _context = context;
+
         }
+        
+        
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {
