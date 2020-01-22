@@ -15,7 +15,6 @@ namespace Eventor2.Models
             return new ApplicationDbContext();
         }
 
-        DbSet<TicketModels>  Tickets { get; set; }
 
         public System.Data.Entity.DbSet<Eventor2.Models.TicketModels> TicketModels { get; set; }
     }
