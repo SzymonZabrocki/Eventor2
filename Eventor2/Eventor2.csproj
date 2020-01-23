@@ -216,6 +216,7 @@
     <Content Include="Content\Images\01.jpg" />
     <Content Include="Content\Images\02.jpg" />
     <Content Include="Content\Images\03.jpg" />
+    <Content Include="Content\Images\header.jpg" />
     <Content Include="Content\one-page-wonder.css" />
     <Content Include="Content\one-page-wonder.min.css" />
     <Content Include="favicon.ico" />
