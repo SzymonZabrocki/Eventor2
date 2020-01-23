@@ -22,11 +22,12 @@
 
                 <div class="input-group">
                     <div class="input-group-append">
-                    @using (Html.BeginForm("ReserveBasicTicketForLoggedUser", "TicketModels", FormMethod.Post))
-                    {
-                        @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder="Wpisz liczbę biletów" })
-                        <button class="btn btn-outline-secondary" type="submit">Rezerwuj</button>
-                    }
+                        @using (Html.BeginForm("ReserveBasicTicketForLoggedUser", "TicketModels", FormMethod.Post))
+                        {
+                            @Html.ValidationMessage("CountError", new { @class = "text-danger" })
+                            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder = "Wpisz liczbę biletów", name="basic" })
+                            <button class="btn btn-outline-secondary" type="submit">Rezerwuj</button>
+                        }
                     </div>
 
                 </div>
@@ -56,7 +57,7 @@
                     <div class="input-group-append">
                         @using (Html.BeginForm("ReserveProTicketForLoggedUser", "TicketModels", FormMethod.Post))
                         {
-                            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder = "Wpisz liczbę biletów" })
+                            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder = "Wpisz liczbę biletów", name="pro" })
                             <button class="btn btn-outline-secondary" type="submit">Rezerwuj</button>
                             
                         }
@@ -85,7 +86,7 @@
                     <div class="input-group-append">
                         @using (Html.BeginForm("ReserveVipTicketForLoggedUser", "TicketModels", FormMethod.Post))
                         {
-                            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder = "Wpisz liczbę biletów" })
+                            @Html.TextBoxFor(m => m.Count, new { @class = "form-control", placeholder = "Wpisz liczbę biletów", name="vip" })
                             <button class="btn btn-outline-secondary" type="submit">Rezerwuj</button>
 
                         }

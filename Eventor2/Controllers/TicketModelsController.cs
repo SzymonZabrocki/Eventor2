@@ -39,15 +39,30 @@ namespace Eventor2.Controllers
         
         public ActionResult ReserveBasicTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
         {
-            
-            for (int i = 0; i < helperTicket.Count; i++)
+            if (helperTicket.Count > 0)
             {
-                var ticket = db.TicketModels.First(x => x.Type == "Basic" && x.UserEmail == null);
-                ticket.UserEmail = GetLoggedUserMail();
-                db.Entry(ticket).State = EntityState.Modified;
-                db.SaveChanges();
+                if (helperTicket.Count > db.TicketModels.Where(x => x.Type == "Basic" && x.UserEmail == null).Count())
+                {
+                    ModelState.AddModelError("CountError", "Nie ma już tylu miejsc");
+                }
+                else
+                {
+                    for (int i = 0; i < helperTicket.Count; i++)
+                    {
+                        var ticket = db.TicketModels.First(x => x.Type == "Basic" && x.UserEmail == null);
+                        ticket.UserEmail = GetLoggedUserMail();
+                        db.Entry(ticket).State = EntityState.Modified;
+                        db.SaveChanges();
+
+                    }
+                    return RedirectToAction("Index");
+                }
             }
-            return RedirectToAction("Index");
+            else
+            {
+                ModelState.AddModelError("CountError", "Podaj liczbe");
+            }
+                return View("BuyTicket"); 
         }
         [HttpPost]
 
