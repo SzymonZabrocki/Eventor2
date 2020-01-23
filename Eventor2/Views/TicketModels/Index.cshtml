@@ -4,33 +4,38 @@
     ViewBag.Title = "Index";
 }
 
-
-<h2>My Tickets</h2>
+<br />
+<br />
+<br />
+<h2>Moje bilety</h2>
 
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Type)
+            @*@Html.DisplayNameFor(model => model.Type)*@
+            Typ Biletu
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Price)
+            @*@Html.DisplayNameFor(model => model.Price)*@
+            Cena
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    if (item.UserEmail == @Session["LoggedInEmail"].ToString())
+    @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Type)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
+        if (item.UserEmail == @Session["LoggedInEmail"].ToString())
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Type)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
 
-        </tr>
+            </tr>
         }
     }
 
