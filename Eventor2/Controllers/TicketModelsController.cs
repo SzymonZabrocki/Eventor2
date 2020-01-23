@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace Eventor2.Controllers
 {
+    [Authorize]
     public class TicketModelsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -23,6 +24,11 @@ namespace Eventor2.Controllers
             string userId = User.Identity.GetUserId();
             var userEmail = db.Users.First(x => x.Id == userId).Email;
             return userEmail;
+        }
+        [Authorize]
+        public ActionResult BuyTicket()
+        {
+            return View();
         }
 
         // GET: TicketModels
@@ -66,8 +72,7 @@ namespace Eventor2.Controllers
                     TicketID = ticketModels.TicketID,
                     Type = ticketModels.Type,
                     Price = ticketModels.Price,
-                    UserEmail = GetLoggedUserMail()
-                    
+                    UserEmail = GetLoggedUserMail()        
                 };
                 db.TicketModels.Add(ticket);
                 db.SaveChanges();

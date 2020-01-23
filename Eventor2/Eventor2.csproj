@@ -310,6 +310,7 @@
     <Content Include="Views\TicketModels\Details.cshtml" />
     <Content Include="Views\TicketModels\Edit.cshtml" />
     <Content Include="Views\TicketModels\Index.cshtml" />
+    <Content Include="Views\TicketModels\BuyTicket.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
