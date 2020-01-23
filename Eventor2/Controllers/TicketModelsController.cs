@@ -37,11 +37,40 @@ namespace Eventor2.Controllers
 
         [HttpPost]
         
-        public ActionResult ReserveBaseTicketForLoggedUser()
+        public ActionResult ReserveBasicTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
         {
-            for (int i = 0; i < 5; i++)
+            
+            for (int i = 0; i < helperTicket.Count; i++)
             {
                 var ticket = db.TicketModels.First(x => x.Type == "Basic" && x.UserEmail == null);
+                ticket.UserEmail = GetLoggedUserMail();
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+
+        public ActionResult ReserveProTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
+        {
+
+            for (int i = 0; i < helperTicket.Count; i++)
+            {
+                var ticket = db.TicketModels.First(x => x.Type == "Pro" && x.UserEmail == null);
+                ticket.UserEmail = GetLoggedUserMail();
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+        [HttpPost]
+
+        public ActionResult ReserveVipTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
+        {
+
+            for (int i = 0; i < helperTicket.Count; i++)
+            {
+                var ticket = db.TicketModels.First(x => x.Type == "Vip" && x.UserEmail == null);
                 ticket.UserEmail = GetLoggedUserMail();
                 db.Entry(ticket).State = EntityState.Modified;
                 db.SaveChanges();
