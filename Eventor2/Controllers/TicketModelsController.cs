@@ -16,8 +16,14 @@ namespace Eventor2.Controllers
     [Authorize]
     public class TicketModelsController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
         
+        [Authorize]
+        public ActionResult BuyTicket()
+        {
+            GetLoggedUserMail();
+            return View();
+        }
         
         private string GetLoggedUserMail()
         {
@@ -27,30 +33,50 @@ namespace Eventor2.Controllers
             return userEmail;
         }
 
-        [Authorize]
-        public ActionResult BuyTicket()
-        {
-            GetLoggedUserMail();
-            return View();
-        }
-
-
 
         [HttpPost]
-        
-        public ActionResult ReserveBasicTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
+
+        public ActionResult ReserveBasicTicket([Bind(Include = "Count")] TicketNumberModels helperTicket)
         {
-            if (helperTicket.Count > 0)
+            return ReserveTickets(helperTicket.Count, "Basic");
+        }
+
+        [HttpPost]
+
+        public ActionResult ReserveProTicket([Bind(Include = "Count")] TicketNumberModels helperTicket)
+        {
+            return ReserveTickets(helperTicket.Count, "Pro");
+        }
+
+        [HttpPost]
+
+        public ActionResult ReserveVipTicket([Bind(Include = "Count")] TicketNumberModels helperTicket)
+        {
+            return ReserveTickets(helperTicket.Count, "Vip");
+        }
+
+        private int GetNumberOfUserTickets()
+        {
+            return db.TicketModels.Where(x => x.UserEmail == GetLoggedUserMail()).Count();
+        }
+
+        private ActionResult ReserveTickets(int amount, string ticketType)
+        {
+            if (amount < 1)
             {
-                if (helperTicket.Count > db.TicketModels.Where(x => x.Type == "Basic" && x.UserEmail == null).Count())
+                ModelState.AddModelError("ValueError"+ticketType, "Podaj liczbę naturalną");
+            }
+            else
+            {
+                if (amount > db.TicketModels.Where(x => x.Type == ticketType && x.UserEmail == null).Count())
                 {
-                    ModelState.AddModelError("CountError", "Nie ma już tylu miejsc");
+                    ModelState.AddModelError("CountError" + ticketType, "Nie ma już tylu miejsc");
                 }
                 else
                 {
-                    for (int i = 0; i < helperTicket.Count; i++)
+                    for (int i = 0; i < amount; i++)
                     {
-                        var ticket = db.TicketModels.First(x => x.Type == "Basic" && x.UserEmail == null);
+                        var ticket = db.TicketModels.First(x => x.Type == ticketType && x.UserEmail == null);
                         ticket.UserEmail = GetLoggedUserMail();
                         db.Entry(ticket).State = EntityState.Modified;
                         db.SaveChanges();
@@ -58,150 +84,14 @@ namespace Eventor2.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            else
-            {
-                ModelState.AddModelError("CountError", "Podaj liczbe");
-            }
-            return View("BuyTicket"); 
+            return View("BuyTicket");
         }
-
-        [HttpPost]
-
-        public ActionResult ReserveProTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
-        {
-
-            for (int i = 0; i < helperTicket.Count; i++)
-            {
-                var ticket = db.TicketModels.First(x => x.Type == "Pro" && x.UserEmail == null);
-                ticket.UserEmail = GetLoggedUserMail();
-                db.Entry(ticket).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
-        [HttpPost]
-
-        public ActionResult ReserveVipTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
-        {
-
-            for (int i = 0; i < helperTicket.Count; i++)
-            {
-                var ticket = db.TicketModels.First(x => x.Type == "Vip" && x.UserEmail == null);
-                ticket.UserEmail = GetLoggedUserMail();
-                db.Entry(ticket).State = EntityState.Modified;
-                db.SaveChanges();
-            }
-            return RedirectToAction("Index");
-        }
-
-
+        
         // GET: TicketModels
         public ActionResult Index()
         {
             GetLoggedUserMail();
             return View(db.TicketModels.ToList());
-        }
-
-        // GET: TicketModels/Details/5
-        public ActionResult Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketModels ticketModels = db.TicketModels.Find(id);
-            if (ticketModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketModels);
-        }
-
-        // GET: TicketModels/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: TicketModels/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "TicketID,Type,Price")] TicketModels ticketModels)
-        {
-            if (ModelState.IsValid)
-            {
-                var ticket = new TicketModels()
-                {
-                    TicketID = ticketModels.TicketID,
-                    Type = ticketModels.Type,
-                    Price = ticketModels.Price,
-                    UserEmail = GetLoggedUserMail()        
-                };
-                db.TicketModels.Add(ticket);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(ticketModels);
-        }
-
-        // GET: TicketModels/Edit/5
-        public ActionResult Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketModels ticketModels = db.TicketModels.Find(id);
-            if (ticketModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketModels);
-        }
-
-        // POST: TicketModels/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TicketID,Type,Price,UserEmail")] TicketModels ticketModels)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(ticketModels).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            return View(ticketModels);
-        }
-
-        // GET: TicketModels/Delete/5
-        public ActionResult Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            TicketModels ticketModels = db.TicketModels.Find(id);
-            if (ticketModels == null)
-            {
-                return HttpNotFound();
-            }
-            return View(ticketModels);
-        }
-
-        // POST: TicketModels/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            TicketModels ticketModels = db.TicketModels.Find(id);
-            db.TicketModels.Remove(ticketModels);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)
