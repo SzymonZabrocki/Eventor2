@@ -23,11 +23,14 @@ namespace Eventor2.Controllers
         {
             string userId = User.Identity.GetUserId();
             var userEmail = db.Users.First(x => x.Id == userId).Email;
+            Session["LoggedInEmail"] = userEmail;
             return userEmail;
+            
         }
         [Authorize]
         public ActionResult BuyTicket()
         {
+            GetLoggedUserMail();
             return View();
         }
 

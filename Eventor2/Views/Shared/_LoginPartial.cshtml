@@ -12,7 +12,10 @@
                 <li><a href="javascript:document.getElementById('logoutForm').
             ()">Wyloguj</a></li>
             </ul>*@
-        <ul class="navbar-nav ml-auto text-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                    <a class="nav-link" onclick="location.href='@Url.Action("BuyTicket", "TicketModels")'">Get a Ticket</a>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link">Welcome @User.Identity.GetUserName() !</a>
                 </li>
