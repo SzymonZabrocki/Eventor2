@@ -6759,7 +6759,7 @@ button.bg-dark:focus {
   display: inline-flex !important;
 }
 
-@media (min-width: 576px) {
+/*@media (min-width: 576px) {
   .d-sm-none {
     display: none !important;
   }
@@ -6790,7 +6790,7 @@ button.bg-dark:focus {
     display: inline-flex !important;
   }
 }
-
+    */
 @media (min-width: 768px) {
   .d-md-none {
     display: none !important;
