@@ -17,7 +17,7 @@
                     <a class="nav-link" onclick="location.href='@Url.Action("BuyTicket", "TicketModels")'">Get a Ticket</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link">Welcome @User.Identity.GetUserName() !</a>
+                    <a class="nav-link" onclick="location.href='@Url.Action("Index", "TicketModels")'">@User.Identity.GetUserName() !</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()">Sign out</a>
