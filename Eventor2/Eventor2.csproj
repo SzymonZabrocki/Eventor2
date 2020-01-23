@@ -58,6 +58,9 @@
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NotFoundMvc, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\NotFoundMvc.1.5.0\lib\net40\NotFoundMvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -312,6 +315,7 @@
     <Content Include="Views\TicketModels\Edit.cshtml" />
     <Content Include="Views\TicketModels\Index.cshtml" />
     <Content Include="Views\TicketModels\BuyTicket.cshtml" />
+    <Content Include="Views\Shared\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
