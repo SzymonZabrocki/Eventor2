@@ -25,14 +25,54 @@ namespace Eventor2.Controllers
             var userEmail = db.Users.First(x => x.Id == userId).Email;
             Session["LoggedInEmail"] = userEmail;
             return userEmail;
-            
         }
+
         [Authorize]
         public ActionResult BuyTicket()
         {
             GetLoggedUserMail();
             return View();
         }
+
+        public ActionResult Details(int txtId)
+        {
+            System.Diagnostics.Debug.WriteLine("odpalone");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult Report(string reportName)
+        {
+            System.Diagnostics.Debug.WriteLine("odpalone");
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+
+        public ActionResult ReserveBaseTicketForLoggedUser(string baseAmount)
+        {
+            System.Diagnostics.Debug.WriteLine(baseAmount);
+            if (ModelState.IsValid)
+            {
+                //var ticket = db.TicketModels.Where(x => x.Type == "Base" && x.UserEmail == null);
+                for (int i = 0; i < Int32.Parse(baseAmount); i++)
+                {
+                    var ticket = new TicketModels()
+                    {
+                        TicketID = db.TicketModels.First(x => x.Type == "Base" && x.UserEmail == null).TicketID,
+                        Type = "Base",
+                        Price = 99,
+                        UserEmail = GetLoggedUserMail()
+                    };
+                    db.Entry(ticket).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Index");
+        }
+
 
         // GET: TicketModels
         public ActionResult Index()
