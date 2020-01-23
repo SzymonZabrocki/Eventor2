@@ -9,9 +9,9 @@
 <br />
 <h2>Moje bilety</h2>
 
-
-<table class="table">
-    <tr>
+<div class="container">
+<table class="table table-striped" style="border: 2px solid grey">
+    <tr style="border-bottom: 2px solid grey">
         <th>
             @*@Html.DisplayNameFor(model => model.Type)*@
             Typ Biletu
@@ -20,23 +20,23 @@
             @*@Html.DisplayNameFor(model => model.Price)*@
             Cena
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
         if (item.UserEmail == @Session["LoggedInEmail"].ToString())
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Type)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Type)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.Price)
+    </td>
 
-            </tr>
+</tr>
         }
     }
 
 </table>
+</div>
