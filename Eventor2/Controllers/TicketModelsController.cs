@@ -77,6 +77,7 @@ namespace Eventor2.Controllers
         // GET: TicketModels
         public ActionResult Index()
         {
+            GetLoggedUserMail();
             return View(db.TicketModels.ToList());
         }
 
@@ -145,7 +146,7 @@ namespace Eventor2.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "TicketID,Type,Price")] TicketModels ticketModels)
+        public ActionResult Edit([Bind(Include = "TicketID,Type,Price,UserEmail")] TicketModels ticketModels)
         {
             if (ModelState.IsValid)
             {
