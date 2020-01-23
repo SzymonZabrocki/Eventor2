@@ -34,42 +34,18 @@ namespace Eventor2.Controllers
             return View();
         }
 
-        public ActionResult Details(int txtId)
-        {
-            System.Diagnostics.Debug.WriteLine("odpalone");
-            return RedirectToAction("Index");
-        }
 
         [HttpPost]
-        public ActionResult Report(string reportName)
+        
+        public ActionResult ReserveBaseTicketForLoggedUser()
         {
-            System.Diagnostics.Debug.WriteLine("odpalone");
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-
-        public ActionResult ReserveBaseTicketForLoggedUser(string baseAmount)
-        {
-            System.Diagnostics.Debug.WriteLine(baseAmount);
-            if (ModelState.IsValid)
+            for (int i = 0; i < 5; i++)
             {
-                //var ticket = db.TicketModels.Where(x => x.Type == "Base" && x.UserEmail == null);
-                for (int i = 0; i < Int32.Parse(baseAmount); i++)
-                {
-                    var ticket = new TicketModels()
-                    {
-                        TicketID = db.TicketModels.First(x => x.Type == "Base" && x.UserEmail == null).TicketID,
-                        Type = "Base",
-                        Price = 99,
-                        UserEmail = GetLoggedUserMail()
-                    };
-                    db.Entry(ticket).State = EntityState.Modified;
-                    db.SaveChanges();
-                }
-                return RedirectToAction("Index");
+                var ticket = db.TicketModels.First(x => x.Type == "Basic" && x.UserEmail == null);
+                ticket.UserEmail = GetLoggedUserMail();
+                db.Entry(ticket).State = EntityState.Modified;
+                db.SaveChanges();
             }
-
             return RedirectToAction("Index");
         }
 
