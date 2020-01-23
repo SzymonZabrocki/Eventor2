@@ -35,6 +35,7 @@ namespace Eventor2.Controllers
         }
 
 
+
         [HttpPost]
         
         public ActionResult ReserveBasicTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
@@ -53,7 +54,6 @@ namespace Eventor2.Controllers
                         ticket.UserEmail = GetLoggedUserMail();
                         db.Entry(ticket).State = EntityState.Modified;
                         db.SaveChanges();
-
                     }
                     return RedirectToAction("Index");
                 }
@@ -62,8 +62,9 @@ namespace Eventor2.Controllers
             {
                 ModelState.AddModelError("CountError", "Podaj liczbe");
             }
-                return View("BuyTicket"); 
+            return View("BuyTicket"); 
         }
+
         [HttpPost]
 
         public ActionResult ReserveProTicketForLoggedUser([Bind(Include = "Count")] TicketNumberModels helperTicket)
